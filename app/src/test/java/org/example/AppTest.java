@@ -6,9 +6,62 @@ package org.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+@Test
+    public void testZipWithEqualSizeLists() {
+        List<Integer> list1 = List.of(1, 3, 5);
+        List<Integer> list2 = List.of(2, 4, 6);
+        List<Integer> expected = List.of(1, 2, 3, 4, 5, 6);
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithFirstListLonger() {
+        List<String> list1 = List.of("A", "B", "C", "D");
+        List<String> list2 = List.of("1", "2");
+        List<String> expected = List.of("A", "1", "B", "2", "C", "D");
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithSecondListLonger() {
+        List<String> list1 = List.of("A", "B");
+        List<String> list2 = List.of("1", "2", "3", "4");
+        List<String> expected = List.of("A", "1", "B", "2", "3", "4");
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithEmptyFirstList() {
+        List<Integer> list1 = List.of();
+        List<Integer> list2 = List.of(1, 2, 3);
+        List<Integer> expected = List.of(1, 2, 3);
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithEmptySecondList() {
+        List<Integer> list1 = List.of(1, 2, 3);
+        List<Integer> list2 = List.of();
+        List<Integer> expected = List.of(1, 2, 3);
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithBothListsEmpty() {
+        List<String> list1 = List.of();
+        List<String> list2 = List.of();
+        List<String> expected = List.of();
+        assertEquals(expected, ListZipper.zip(list1, list2));
+    }
+
+    @Test
+    public void testZipWithDifferentTypes() {
+        List<Number> list1 = List.of(1, 3L, 5.0);
+        List<Number> list2 = List.of(2.0f, 4);
+        List<Number> expected = List.of(1, 2.0f, 3L, 4, 5.0);
+        assertEquals(expected, ListZipper.zip(list1, list2));
     }
 }
